@@ -10,7 +10,7 @@ import com.aphiwe.testApi.core.StudentProtocol._
 
 import scala.concurrent.Future
 
-trait StudentRouts extends SprayJsonSupport{
+object StudentRouts extends SprayJsonSupport{
   def route: Route =
     concat(
       get {
