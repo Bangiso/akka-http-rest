@@ -8,13 +8,13 @@ import akka.http.scaladsl.server.Route
 import com.aphiwe.testApi.RestApi.{fetchStudent, fetchStudents, saveStudent}
 import com.aphiwe.testApi.core.StudentProtocol._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-object StudentRouts extends SprayJsonSupport{
-  def route: Route =
+trait StudentRouts extends SprayJsonSupport{
+  val route: Route =
     concat(
       get {
-        path("student" / LongNumber) { studentId =>
+        path("students" / LongNumber) { studentId =>
           val maybeStud: Future[Option[Student]] = fetchStudent(studentId)
           onSuccess(maybeStud) {
             case Some(stud) => complete(stud)
@@ -23,7 +23,7 @@ object StudentRouts extends SprayJsonSupport{
         }
       },
       get {
-        path("student" / "all") {
+        path("students" / "all") {
           val maybeStud: Future[Option[List[Student]]] = fetchStudents()
           onSuccess(maybeStud) {
             case Some(stud) => complete(stud)

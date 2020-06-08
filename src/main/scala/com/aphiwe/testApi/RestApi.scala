@@ -1,11 +1,11 @@
 package com.aphiwe.testApi
 
 import akka.http.scaladsl.Http
-import com.aphiwe.testApi.api.StudentRouts._
+import com.aphiwe.testApi.api._
 import com.aphiwe.testApi.service.StudentSlice
 import scala.io.StdIn
 
-object RestApi extends StudentSlice {
+object RestApi extends StudentSlice with  StudentRouts{
 
   def main(args: Array[String]) {
 

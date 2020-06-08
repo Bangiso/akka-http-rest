@@ -23,7 +23,10 @@ class StudentSlice extends StudentService {
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher
-  var students: List[Student] = List(new Student(1, "Aphiwe", 28))
+  var students: List[Student] = List(
+    new Student(1, "Aphiwe", 28),
+    new Student(2, "San", 89)
+  )
 
   override def fetchStudent(studentId: Long): Future[Option[Student]] = Future {
     students.find(st => st.id == studentId)
