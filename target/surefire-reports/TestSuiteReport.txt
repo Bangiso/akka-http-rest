@@ -1,13 +1,9 @@
-[31m*** RUN ABORTED ***[0m
-[31m  java.lang.ClassNotFoundException: org.scalatest.junit.JUnitWrapperSuite[0m
-[31m  at java.net.URLClassLoader.findClass(URLClassLoader.java:382)[0m
-[31m  at java.lang.ClassLoader.loadClass(ClassLoader.java:418)[0m
-[31m  at java.lang.ClassLoader.loadClass(ClassLoader.java:351)[0m
-[31m  at org.scalatest.tools.Runner$.doRunRunRunDaDoRunRun(Runner.scala:1208)[0m
-[31m  at org.scalatest.tools.Runner$.$anonfun$runOptionallyWithPassFailReporter$24(Runner.scala:993)[0m
-[31m  at org.scalatest.tools.Runner$.$anonfun$runOptionallyWithPassFailReporter$24$adapted(Runner.scala:971)[0m
-[31m  at org.scalatest.tools.Runner$.withClassLoaderAndDispatchReporter(Runner.scala:1480)[0m
-[31m  at org.scalatest.tools.Runner$.runOptionallyWithPassFailReporter(Runner.scala:971)[0m
-[31m  at org.scalatest.tools.Runner$.main(Runner.scala:775)[0m
-[31m  at org.scalatest.tools.Runner.main(Runner.scala)[0m
-[31m  ...[0m
+[36mDiscovery starting.[0m
+[36mDiscovery completed in 194 milliseconds.[0m
+[36mRun starting. Expected test count is: 0[0m
+[32mDiscoverySuite:[0m
+[36mRun completed in 541 milliseconds.[0m
+[36mTotal number of tests run: 0[0m
+[36mSuites: completed 1, aborted 0[0m
+[36mTests: succeeded 0, failed 0, canceled 0, ignored 0, pending 0[0m
+[33mNo tests were executed.[0m
