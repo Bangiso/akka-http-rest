@@ -7,7 +7,6 @@ import akka.stream.ActorMaterializer
 import com.aphiwe.testApi.api.StudentRouts
 import com.aphiwe.testApi.service.StudentSlice
 
-import scala.io.StdIn
 
 object Main extends StudentRouts with StudentSlice {
   implicit val system = ActorSystem("app")
