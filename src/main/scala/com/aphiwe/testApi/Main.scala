@@ -6,6 +6,7 @@ import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.aphiwe.testApi.api.StudentRouts
 import com.aphiwe.testApi.service.StudentSlice
+import com.typesafe.config.ConfigFactory
 
 
 object Main extends StudentRouts with StudentSlice {
@@ -14,7 +15,10 @@ object Main extends StudentRouts with StudentSlice {
   implicit val materializer = ActorMaterializer()
 
   def main(arg: Array[String]): Unit = {
-    println(s"Starting online at http://localhost:8080...")
-    Http().bindAndHandle(route, "localhost", 8080)
+    val config =ConfigFactory.parseResourcesAnySyntax("application.conf").withFallback(ConfigFactory.load()).resolve()
+    val port = config.getInt("http.port")
+    val host = config.getString("http.host")
+    println(s"Starting online at http://localhost:${port}...")
+    Http().bindAndHandle(route, host, port)
   }
 }
