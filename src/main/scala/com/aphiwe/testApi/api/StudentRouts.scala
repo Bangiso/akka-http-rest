@@ -55,6 +55,16 @@ trait StudentRouts extends StudentSlice {
                   }
                 }
               }
+            },
+              put {
+              path("student" / LongNumber) { id =>
+                entity(as[Student]) { student =>
+                  val update: Future[Done] = studentService.updateStudent(id,student)
+                  onComplete(update) { done =>
+                    complete("student updated")
+                  }
+                }
+              }
             }
           )
         }
