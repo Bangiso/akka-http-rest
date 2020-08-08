@@ -36,7 +36,7 @@ class StudentRoutsTest extends Specification with Specs2RouteTest with StudentRo
       }
     }
 
-    "return successful student updated for PUT requests to the path /student/{i}" in {
+    "return successful student updated for PUT requests to the path /student/{id}" in {
       Put("/student/1", """{"gpa":28.0,"id":1,"name":"Alex"}""".parseJson) ~> Route.seal(route) ~> check {
         status should ===(StatusCodes.OK)
         entityAs[String] shouldEqual "student updated"
