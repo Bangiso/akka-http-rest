@@ -1,0 +1,4 @@
+FROM openjdk:8
+ADD target/test-api-0.1-SNAPSHOT-allinone.jar  test-api-0.1-SNAPSHOT-allinone.jar
+EXPOSE 8088
+ENTRYPOINT ["java", "-jar", "test-api-0.1-SNAPSHOT-allinone.jar"]
