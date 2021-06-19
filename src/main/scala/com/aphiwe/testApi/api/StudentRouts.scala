@@ -10,6 +10,7 @@ import com.aphiwe.testApi.core.StudentProtocol._
 import com.aphiwe.testApi.service.StudentSlice
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
+import scala.util.{Failure, Success}
 
 trait StudentRouts extends StudentSlice {
 
@@ -29,36 +30,45 @@ trait StudentRouts extends StudentSlice {
         handleErrors {
           concat(
             get {
-              path("students" / LongNumber) { studentId =>
-                val maybeStud: Future[Option[Student]] = studentService.fetchStudent(studentId)
-                onSuccess(maybeStud) {
+              path("api" / "students" / IntNumber) { studentId =>
+                onSuccess(studentService.fetchStudent(studentId)) {
                   case Some(stud) => complete(stud)
-                  case None => complete(StatusCodes.NotFound)
+                  case _ => complete(StatusCodes.NotFound)
                 }
               }
             },
             get {
-              path("students" / "all") {
-                val maybeStud: Future[Option[List[Student]]] = studentService.fetchStudents()
-                onSuccess(maybeStud) {
-                  case Some(stud) => complete(stud)
-                  case None => complete(StatusCodes.NotFound)
+              path("api" / "students") {
+                onSuccess(studentService.fetchStudents()) {
+                  case stud: Seq[Student] => complete(stud)
+                  case _ => complete(StatusCodes.NotFound)
                 }
               }
             },
             post {
-              path("student") {
+              path("api" / "students") {
                 entity(as[Student]) { student =>
-                  val saved: Future[Done] = studentService.saveStudent(student)
-                  onComplete(saved) { done =>
-                    complete("student created")
-                  }
+                  handleUpdate(studentService.saveStudent(student), "student created")
+                }
+              }
+            },
+            put{
+              path("api" / "students") {
+                entity(as[Student]) { student =>
+                  handleUpdate(studentService.updateStudent(student), "student updated")
                 }
               }
             }
           )
         }
       }
+    }
+  }
+
+  def handleUpdate(f: Future[Done], ms: String) = onComplete(f){ ff =>
+    ff match {
+      case Success(_) => complete(ms)
+      case Failure(_) => complete(StatusCodes.InternalServerError)
     }
   }
 }

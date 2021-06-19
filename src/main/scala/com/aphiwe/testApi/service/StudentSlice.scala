@@ -1,43 +1,38 @@
 package com.aphiwe.testApi.service
 
 import akka.Done
+import akka.actor.ActorSystem
 import com.aphiwe.testApi.core.StudentProtocol._
+import com.aphiwe.testApi.core.ImpExecutors._
+import com.aphiwe.testApi.dao.StudentDAO
 
-import scala.concurrent.{ExecutionContextExecutor, Future}
+import scala.concurrent.{ Future}
 
 trait StudentService {
 
-  def fetchStudent(studentId: Long)(implicit ex:ExecutionContextExecutor): Future[Option[Student]]
+  def fetchStudent(studentId: Int): Future[Option[Student]]
 
-  def fetchStudents()(implicit ex:ExecutionContextExecutor): Future[Option[List[Student]]]
+  def fetchStudents(): Future[Seq[Student]]
 
-  def saveStudent(student: Student)(implicit ex:ExecutionContextExecutor): Future[Done]
+  def saveStudent(student: Student): Future[Done]
 
+  def updateStudent( student: Student): Future[Done]
 }
 
 trait StudentSlice{
 
-  val studentService: StudentService=new StudentService {
-    var students: List[Student] = List(
-      new Student(1, "Aphiwe", 28),
-      new Student(2, "San", 89)
-    )
+  val studentService: StudentService= new StudentService {
 
-    override def fetchStudent(studentId: Long)(implicit ex:ExecutionContextExecutor): Future[Option[Student]] = Future {
-      students.find(st => st.id == studentId)
-    }
+    override def fetchStudent(studentId: Int): Future[Option[Student]] =  StudentDAO
+      .fetchStudent(studentId)
 
-    override def fetchStudents()(implicit ex:ExecutionContextExecutor): Future[Option[List[Student]]] = Future {
-      Option(students)
-    }
+    override def fetchStudents(): Future[Seq[Student]] = StudentDAO.
+      fetchStudents()
 
+    override def saveStudent(student: Student): Future[Done] = StudentDAO
+      .writeStud(student)
 
-    override def saveStudent(student: Student)(implicit ex:ExecutionContextExecutor): Future[Done] = {
-      if (students.contains(student)) students
-      else students = student :: students
-      Future {
-        Done
-      }
-    }
+    override def updateStudent(student: Student): Future[Done] = StudentDAO
+      .updateStudent(student)
   }
 }
