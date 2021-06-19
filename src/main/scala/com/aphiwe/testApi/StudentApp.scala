@@ -6,8 +6,7 @@ import com.aphiwe.testApi.core.ImpExecutors._
 import com.aphiwe.testApi.service.StudentSlice
 import com.typesafe.config.ConfigFactory
 
-
-object Main extends StudentRouts with StudentSlice {
+object StudentApp extends StudentRouts with StudentSlice {
 
   def main(arg: Array[String]): Unit = {
     val config =ConfigFactory.parseResourcesAnySyntax("application.conf").withFallback(ConfigFactory.load()).resolve()
