@@ -5,7 +5,7 @@ import spray.json.DefaultJsonProtocol
 
 object StudentProtocol extends DefaultJsonProtocol {
 
-  final case class Student(id: Long, name: String, gpa: Double)
+  final case class Student(id: Int, name: String, gpa: Double)
 
   final case class Students(students: List[Student])
 
