@@ -54,15 +54,30 @@ object StudentDAO {
 
     val students = Source(immutable.Seq(student))
     val statementBinder: (Student, PreparedStatement) => BoundStatement =
-      (stud, preparedStatement) => preparedStatement.bind( stud.name, stud.gpa.toFloat, Int.box(stud.id))
+      (stud, preparedStatement) => preparedStatement.bind(stud.name, stud.gpa.toFloat, Int.box(stud.id))
 
     students
       .via(
         CassandraFlow.create(
           CassandraWriteSettings.defaults,
-          s"Update students.students SET name = ? where  gpa = ? and id = ?",
+          s"UPDATE students.students SET name = ?, gpa = ? WHERE id = ?",
           statementBinder
         )
       ).runWith(Sink.ignore)
+  }
+
+    def deleteStudentById(id: Int)(implicit system: ActorSystem, cassandraSession: CassandraSession ): Future[Done] = {
+
+      val statementBinder: (Int, PreparedStatement) => BoundStatement =
+        (id, preparedStatement) => preparedStatement.bind(Int.box(id))
+
+      Source(immutable.Seq(id))
+        .via(
+          CassandraFlow.create(
+            CassandraWriteSettings.defaults,
+            s"DELETE FROM students.students where id = ?",
+            statementBinder
+          )
+        ).runWith(Sink.ignore)
   }
 }

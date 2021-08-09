@@ -16,11 +16,13 @@ trait StudentService {
   def saveStudent(student: Student): Future[Done]
 
   def updateStudent( student: Student): Future[Done]
+
+  def removeStudent( studentId: Int): Future[Done]
 }
 
 trait StudentSlice{
 
-  val studentService: StudentService= new StudentService {
+  val studentService: StudentService = new StudentService {
 
     override def fetchStudent(studentId: Int): Future[Option[Student]] =  StudentDAO
       .fetchStudent(studentId)
@@ -33,5 +35,7 @@ trait StudentSlice{
 
     override def updateStudent(student: Student): Future[Done] = StudentDAO
       .updateStudent(student)
+    override def removeStudent(studentId: Int): Future[Done] = StudentDAO
+      .deleteStudentById(studentId)
   }
 }

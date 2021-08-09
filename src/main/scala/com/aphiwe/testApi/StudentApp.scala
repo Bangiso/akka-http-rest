@@ -12,7 +12,7 @@ object StudentApp extends StudentRouts with StudentSlice {
     val config =ConfigFactory.parseResourcesAnySyntax("application.conf").withFallback(ConfigFactory.load()).resolve()
     val port = config.getInt("http.port")
     val host = config.getString("http.host")
-    println(s"starting online at http://localhost:${port}...")
+    println(s"starting online at http://localhost:${port}/index.html...")
     Http().bindAndHandle(route, host, port)
   }
 }
