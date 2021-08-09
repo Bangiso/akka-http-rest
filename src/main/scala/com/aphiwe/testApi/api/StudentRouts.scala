@@ -26,7 +26,7 @@ trait StudentRouts extends StudentSlice {
              |    <li>GET &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;api/students</li>
              |    <li>POST &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;api/students</li>
              |    <li>PUT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;api/students</li>
-             |    <li>DELETE &nbsp;&nbsp;api/students</li>
+             |    <li>DELETE &nbsp;&nbsp;api/students/{id}</li>
              |</ul>
              |""".stripMargin))}
       },
